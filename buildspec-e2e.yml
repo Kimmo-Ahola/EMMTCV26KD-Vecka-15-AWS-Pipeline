@@ -1,0 +1,47 @@
+version: 0.2 # finns bara 0.1 och 0.2, vi tar den senaste
+
+# phases först
+# en phase består ofta av
+# install = vi lägger till runtime
+# pre_build = körs innan build
+# build = bygger projektfiler och kanske kör tester
+# post_build = vi kan rensa upp eller spara loggar etc
+
+phases:
+  install:
+    runtime-version: corretto21 # 21 för att vi har java version 21
+
+
+  # man kan i pre_build hämta images från docker eller aws registry
+  # eller inlogg från secrets manager
+  pre_build:
+    commands:
+      - echo "========== Starting my e2e test stage =========="
+      - mvn -B exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps chromium"
+
+  build:
+    commands:
+      - echo "Vi kör E2E-testerna"
+      - mvn -B test -Dgroups=e2e
+
+
+  post_build:
+    commands:
+      - echo "========== Ending my e2e test stage =========="
+
+reports:
+  UnitTestReport:
+    files:
+      - "**/*"
+    base-directory: 'target/surefire-reports'
+    file-format: JUNITXML
+
+artifacts:
+  files:
+    - "**/*"
+
+cache:
+  paths:
+    - '/root/.m2/**/*'
+
+
