@@ -1,0 +1,27 @@
+version: 0.2 # 0.2 är senaste
+
+# phases
+# install, pre_build, build, post_build
+
+phases:
+  # vi ska installera java-miljön
+  install:
+    runtime-versions:
+      java: corretto21 # AWS java-version av Java 21
+
+  # vi kan här sätta upp saker som behövs i ett riktigt projekt
+  # tex secrets, variabler etc
+  pre_build:
+    commands: # motsvarar run i github actions
+      - echo "======== Starting the build and test Stage ========"
+
+
+  build:
+    commands:
+      - mvn -B test -Dgroups=unit # unit för att vi har en tag = unit i testerna
+
+  post_build:
+    commands:
+      - echo "======== Ending the build and test Stage ========"
+
+
