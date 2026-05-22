@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto21
+
+  pre_build:
+    commands:
+      - echo "========== Starting my e2e test stage =========="
+      - mvn -B exec:java -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps chromium"
+      - mvn -B exec:java -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install chromium"
+
+  build:
+    commands:
+      - mvn -B test -Dgroups=e2e
+
+
+  post_build:
+    commands:
+      - echo "========== Ending my e2e test stage =========="
