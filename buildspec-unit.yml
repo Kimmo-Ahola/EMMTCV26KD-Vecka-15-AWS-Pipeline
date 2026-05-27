@@ -25,3 +25,7 @@ phases:
       - echo "======== Ending the build and test Stage ========"
 
 
+artifacts:
+  base-directory: target
+  files:
+    - '*.jar'
