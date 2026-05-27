@@ -19,6 +19,7 @@ phases:
   build:
     commands:
       - mvn -B test -Dgroups=unit # unit för att vi har en tag = unit i testerna
+      - mvn -B package -DskipTests # skapa en .jar
 
   post_build:
     commands:
