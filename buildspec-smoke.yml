@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    APP_URL: "http://din-eb-env.eu-north-1.elasticbeanstalk.com"
+    APP_URL: "http://vecka-15-live-env.eba-2yxsmqgm.eu-north-1.elasticbeanstalk.com/"
 
 phases:
   build:
