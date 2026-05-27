@@ -1,0 +1,18 @@
+version: 0.2
+
+env:
+  variables:
+    APP_URL: "http://din-eb-env.eu-north-1.elasticbeanstalk.com"
+
+phases:
+  build:
+    commands:
+      - echo "Smoke test mot $APP_URL/health"
+      - HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$APP_URL/health")
+      - echo "Fick HTTP $HTTP_CODE"
+      - |
+        if [ "$HTTP_CODE" != "200" ]; then
+          echo "Smoke test FAILED: forvantade 200, fick $HTTP_CODE"
+          exit 1
+        fi
+      - echo "Smoke test PASSED"
