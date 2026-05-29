@@ -24,3 +24,10 @@ phases:
   post_build:
     commands:
       - echo "======== Ending the build and test Stage ========"
+
+
+# vi lägger till artefakt = jar-fil som kan användas i deploy-steget
+artifacts:
+  base-directory: target
+  files:
+    - "*.jar" # * wildard. Så länge filen slutar på .jar skickas den vidare
